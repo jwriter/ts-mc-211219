@@ -1,56 +1,47 @@
-// interface IUserAccount {
-//     firstName: string;
-//     age: number;
-// }
-//
-// let person = IUserAccount;
+// const x = 5;
+// let a: 1 | 2 | 3 = 10;
 
-// let userAccount = {
-//     age: 33,
-//     firstName: 'Ihor',
+// enum AnimationEnum {
+//     EASE_IN = 'ease-in1111',
+//     EASE_OUT = 'ease-in',
 // }
-// const {firstName, ...userAccountWithOutFirstName} = userAccount;
 //
-// let person: typeof userAccountWithOutFirstName;
-//
-// person = {
-//     age: 33
+// interface IAnimation {
+//     delay: number;
+//     type: AnimationEnum;
 // }
+//
+// class UIElement {
+//     public animate(options: IAnimation): void {
+//
+//     }
+// }
+//
+// new UIElement().animate({delay: 1000, type: AnimationEnum.EASE_IN});
 
-/*class Acc {
-    public age = 33;
-    public firstName = 'Ihor';
+
+interface IFact {
+    factId: number;
+    description: string;
+    rating: number;
 }
 
-let acc: Acc = new Acc();*/
+const dataList: { action: string, data: IFact } [] = [];
+const a = 'asdasdasd'
+const uniqueValue = () => {
+    return a;
+}
 
-let isDone: boolean = true;
+dataList.map((item) => {
+    //@ts-ignore
+    if (item.data[uniqueValue()] === 2) {
 
-let str: string = 'Ts is awesome';
-str = `${str} === ${isDone}`;
+    }
+    return item;
+})
 
-let num = 1;
-num = 0xf00d;
-num = 0b1010;
-num = NaN;
-num.toFixed();
-
-let bigInt: bigint = 4n;
-
-let nill: null = null;
-let und: undefined = undefined;
-
-const key1: symbol = Symbol('key1');
-const key2: unique symbol = Symbol('key2');
-
-let obj = {
-    [key1]: 'Ts is awesome',
-};
-
-let value = obj[key1];
-//
-// function onlyKey1(v: typeof key1) {
-//
-// }
-//
-// onlyKey1(key2);
+let input = document.getElementById('root') as HTMLInputElement;
+input.addEventListener('input', (e: Event) => {
+    const el = e.target as HTMLInputElement;
+    const v = el.value;
+});
