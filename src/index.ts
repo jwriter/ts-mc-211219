@@ -1,47 +1,30 @@
-// const x = 5;
-// let a: 1 | 2 | 3 = 10;
-
-// enum AnimationEnum {
-//     EASE_IN = 'ease-in1111',
-//     EASE_OUT = 'ease-in',
-// }
-//
-// interface IAnimation {
-//     delay: number;
-//     type: AnimationEnum;
-// }
-//
-// class UIElement {
-//     public animate(options: IAnimation): void {
-//
-//     }
-// }
-//
-// new UIElement().animate({delay: 1000, type: AnimationEnum.EASE_IN});
+let anyType: any = 2;
+anyType.a = 1;
+anyType['b'] = 2;
+anyType();
 
 
-interface IFact {
-    factId: number;
-    description: string;
-    rating: number;
+let objType: object = {};
+objType.a = 1;
+objType['b'] = 2;
+objType();
+objType = [1, 2, 3, 4];
+objType = 1;
+
+Object.create(objType);
+
+let unknowType: unknown = {};
+unknowType.a = 1;
+unknowType['b'] = 2;
+unknowType();
+unknowType = [1, 2, 3, 4];
+unknowType = 1;
+
+Object.create(unknowType);
+
+
+let voidType: void = undefined;
+
+function f(): never {
+    throw new Error();
 }
-
-const dataList: { action: string, data: IFact } [] = [];
-const a = 'asdasdasd'
-const uniqueValue = () => {
-    return a;
-}
-
-dataList.map((item) => {
-    //@ts-ignore
-    if (item.data[uniqueValue()] === 2) {
-
-    }
-    return item;
-})
-
-let input = document.getElementById('root') as HTMLInputElement;
-input.addEventListener('input', (e: Event) => {
-    const el = e.target as HTMLInputElement;
-    const v = el.value;
-});
