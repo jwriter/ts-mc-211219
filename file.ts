@@ -1,30 +1,44 @@
-Object.defineProperty(window, "MySweetApp", { value: "v1.0.0", writable: true });
+let period = 1;
+const baseUrl = 'http://localhost';
 
-function deliveryMethod() {
-    return "overnight";
+let firstName = 'Ihor';
+
+interface IAcc {
+    firstName: string;
+    getName(): string;
 }
 
-function shipWeight() {
-    const el:  HTMLElement | null = document.getElementById('weight');
-    if(el === null){
-        return 0;
-    }
-    return parseInt(el.innerHTML);
+let account: IAcc = {
+    firstName,
+    getName() {
+        return this.firstName;
+    },
+};
+
+let p = {...account};
+let dates = [1, 2, 3];
+let newDates = [...dates];
+
+let {firstName: myName} = account;
+let [, secondDate] = dates;
+
+for (const date of dates) {
+    console.log(date);
 }
 
-function sendUpdates(emailAddr: string | string[]) {
-    function sendEmail(addr: string) {
-        console.log(`Shipping to ${addr} via ${deliveryMethod() || "standard"} delivery`);
+let sum = (a: number, b: number) => a + b;
 
-        if (shipWeight() > 100) {
-            console.log("WARNING: Oversize package");
-        }
-    }
-    if (Array.isArray(emailAddr)) {
-        emailAddr.forEach((val) => {
-            sendEmail(val.trim());
-        });
-    } else {
-        sendEmail(emailAddr.trim());
+class Point {
+    public x: number = 1;
+    public y: number = 2;
+
+    public sum() {
+        return this.x + this.y;
     }
 }
+
+function userMassage([start, end]: TemplateStringsArray, {firstName: newName}: typeof account) {
+    return `${start}${newName}${end}`;
+}
+
+let b = account?.firstName; // ?? sum(1, 2);
