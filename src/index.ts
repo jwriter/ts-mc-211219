@@ -1,37 +1,39 @@
-// type/interface/function/class
+// T extends U ? X : N
+//
+//  type nonUndefined<T> = T extends null | undefined ? never : T;
+//  type someType = string | null | undefined | number;
+// //
+//  const aa: NonNullable<someType> = true;
+//
+//
+// const arr: [() => number, number] = [() => 1, 1];
+// const arr1: [() => { firstName: string, age: number }, number] = [
+//     () => {
+//         return {firstName: 'Ihor', age: 33};
+//     },
+//     1,
+// ];
+//
+// type FirstType<T> =
+//     T extends [infer U, ...unknown[]]
+//         ? U extends (...args: unknown[]) => infer R ? R : never
+//         : never;
+//
+// const fn: FirstType<typeof arr> = 's';
+// const user: FirstType<typeof arr1> = {firstName: 'Ihor', age: 33};
+//
+//
+// let a: Exclude<any, any>
 
-interface IMaleInfo {
-    male: boolean;
-}
+function fn(_a: string, _b: boolean): number {
+    return 1;
+}   // => string | boolean | number
 
-interface IAccount<Info extends { salary: number } & IMaleInfo, Id = number> {
-    id: Id;
-    name: string;
-    info: Info;
-}
+type NonFunction<T> = T extends Function ? never : T;
+type FunctionParamsAndReturn<T> = T extends (...args: infer Args) => infer R
+    ? keyof Args | R
+    : never;
 
-let user: IAccount<{ salary: number, male: boolean, rules: string[] }> = {
-    id: 1231234,
-    info: {
-        male: true,
-        rules: ['read', 'write'],
-        salary: 3000,
-    },
-    name: 'Ihor',
-};
-let admin: IAccount<{ salary: number, male: boolean }, string> = {
-    id: 'asdasd1231234',
-    info: {
-        male: true,
-        salary: 3000,
-    },
-    name: 'Ihor',
-};
+const snb: FunctionParamsAndReturn<typeof fn> = {a: 1};
 
-
-function getProperty<Target, Key extends keyof Target>(obj: Target, key: Key) {
-    return obj[key];
-}
-
-const key1 = 'name';
-getProperty(admin, key1);
+let a: Exclude<any, any>
