@@ -1,31 +1,56 @@
-type User = {
-    readonly firstName: string,
-    readonly age?: number,
-};
-const user: User = {
-    firstName: 'Ihor',
+/** Object **/
+interface IAcc {
+    firstName: string;
+    age: number;
 }
 
-let keys: keyof User = 'firstName';
-
-
-let width: (typeof user)['age'] = 1;
-
-
-let action: {
-    readonly type: string;
-    [key: string]: any;
+type TAcc = {
+    firstName: string;
+    age: number;
 }
 
+/**Function*/
 
-let arr: [number, string] = [1, 'props'];
-arr[100] = 23;
-arr.push(22);
+interface IFunction {
+    (a: number, b: number): number;
+}
 
-let x = [10, 'props'] as const;
+type TFunction = (a: number, b: number) => number;
 
-let p = {
-    arr,
-    firstName: 'Ihor',
-} as const;
-p.arr.push(1);
+/**Extends **/
+
+type TPoint = IPartialPoint & {
+    y: number;
+}
+
+let p: TPoint = {
+    x: 1,
+    y: 2,
+    sum(): { name: string, age: number } {
+        return {name: 'asd', age: 1};
+    }
+}
+
+interface IPartialPoint {
+    x: number;
+
+    sum(): { name: string };
+}
+
+interface IPoint extends TPartialPoint {
+    y: number;
+}
+
+type TPartialPoint = {
+    x: number;
+}
+
+/**Class*/
+
+type Arr = string | number;
+
+
+interface IPartialPoint {
+    z: number;
+    sum(): { age: number };
+}
