@@ -1,56 +1,37 @@
-/** Object **/
-interface IAcc {
-    firstName: string;
-    age: number;
+// type/interface/function/class
+
+interface IMaleInfo {
+    male: boolean;
 }
 
-type TAcc = {
-    firstName: string;
-    age: number;
+interface IAccount<Info extends { salary: number } & IMaleInfo, Id = number> {
+    id: Id;
+    name: string;
+    info: Info;
 }
 
-/**Function*/
+let user: IAccount<{ salary: number, male: boolean, rules: string[] }> = {
+    id: 1231234,
+    info: {
+        male: true,
+        rules: ['read', 'write'],
+        salary: 3000,
+    },
+    name: 'Ihor',
+};
+let admin: IAccount<{ salary: number, male: boolean }, string> = {
+    id: 'asdasd1231234',
+    info: {
+        male: true,
+        salary: 3000,
+    },
+    name: 'Ihor',
+};
 
-interface IFunction {
-    (a: number, b: number): number;
+
+function getProperty<Target, Key extends keyof Target>(obj: Target, key: Key) {
+    return obj[key];
 }
 
-type TFunction = (a: number, b: number) => number;
-
-/**Extends **/
-
-type TPoint = IPartialPoint & {
-    y: number;
-}
-
-let p: TPoint = {
-    x: 1,
-    y: 2,
-    sum(): { name: string, age: number } {
-        return {name: 'asd', age: 1};
-    }
-}
-
-interface IPartialPoint {
-    x: number;
-
-    sum(): { name: string };
-}
-
-interface IPoint extends TPartialPoint {
-    y: number;
-}
-
-type TPartialPoint = {
-    x: number;
-}
-
-/**Class*/
-
-type Arr = string | number;
-
-
-interface IPartialPoint {
-    z: number;
-    sum(): { age: number };
-}
+const key1 = 'name';
+getProperty(admin, key1);
