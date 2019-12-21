@@ -1,30 +1,31 @@
-let anyType: any = 2;
-anyType.a = 1;
-anyType['b'] = 2;
-anyType();
-
-
-let objType: object = {};
-objType.a = 1;
-objType['b'] = 2;
-objType();
-objType = [1, 2, 3, 4];
-objType = 1;
-
-Object.create(objType);
-
-let unknowType: unknown = {};
-unknowType.a = 1;
-unknowType['b'] = 2;
-unknowType();
-unknowType = [1, 2, 3, 4];
-unknowType = 1;
-
-Object.create(unknowType);
-
-
-let voidType: void = undefined;
-
-function f(): never {
-    throw new Error();
+type User = {
+    readonly firstName: string,
+    readonly age?: number,
+};
+const user: User = {
+    firstName: 'Ihor',
 }
+
+let keys: keyof User = 'firstName';
+
+
+let width: (typeof user)['age'] = 1;
+
+
+let action: {
+    readonly type: string;
+    [key: string]: any;
+}
+
+
+let arr: [number, string] = [1, 'props'];
+arr[100] = 23;
+arr.push(22);
+
+let x = [10, 'props'] as const;
+
+let p = {
+    arr,
+    firstName: 'Ihor',
+} as const;
+p.arr.push(1);
