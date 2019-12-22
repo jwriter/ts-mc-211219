@@ -1,24 +1,58 @@
-import { list } from './menu/data';
-import { generateMenu } from './menu/menu';
+// function average(a: number, b: number, c: number): string {
+//     const avg: number = (a + b + c) / 3;
+//     return `Average is ${avg}`;
+// }
+// average(1, 2);
+// average('1', 2, true)
+// const num: number = average(1, 2, 3);
 
-// const navMenu: HTMLDivElement = document.querySelector('.menu') as HTMLDivElement;
-
-$('.menu')
-    .html(generateMenu(list))
-    .on('click', (e: Event) => {
-        const el: HTMLElement = e.target as HTMLElement;
-        if (!el.classList.contains('title')) {
-            return;
-        }
-        const parentLi: HTMLLIElement = el.parentElement as HTMLLIElement;
-        parentLi.classList.toggle('menu-open');
-    });
-// navMenu.innerHTML = generateMenu(list);
-// navMenu.addEventListener('click', (e: MouseEvent) => {
-//     const el: HTMLElement = e.target as HTMLElement;
-//     if (!el.classList.contains('title')) {
-//         return;
+// function average(a: number, b?: number, c?: number): string {
+//     if (b === undefined) {
+//         b = 0;
 //     }
-//     const parentLi: HTMLLIElement = el.parentElement as HTMLLIElement;
-//     parentLi.classList.toggle('menu-open');
-// });
+//     if (c === undefined) {
+//         c = 0;
+//     }
+//     const avg: number = (a + b + c) / 3;
+//     return `Average is ${avg}`;
+// }
+//
+// average(1 );
+// average(1, 2);
+// average('1', 2, true)
+// const num: number = average(1, 2, 3);
+
+// function average(a: number, b: number = 0, c: number = 0): string {
+//     const avg: number = (a + b + c) / 3;
+//     return `Average is ${avg}`;
+// }
+//
+// average(1 );
+// average(1, 2);
+// average('1', 2, true)
+// const num: number = average(1, 2, 3);
+
+type SN = number | string;
+
+function isString(item: SN): item is string {
+    return typeof item === 'string';
+}
+
+function average(...args: SN[]): string {
+    let total: number = 0;
+    for (const item of args) {
+        if (isString(item)) {
+            total += Number(item);
+            continue;
+        }
+        total += item;
+    }
+    const avg: number = total / args.length;
+    return `Average is ${avg}`;
+}
+
+average(1);
+average(1, 2);
+average('1', 2, '2');
+average(1, 2, 3, 4, 5, 5, 55, '123');
+const num: number = average(1, 2, 3);

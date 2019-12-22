@@ -1,24 +1,32 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const data_1 = require("./menu/data");
-const menu_1 = require("./menu/menu");
-// const navMenu: HTMLDivElement = document.querySelector('.menu') as HTMLDivElement;
-$('.menu')
-    .html(menu_1.generateMenu(data_1.list))
-    .on('click', (e) => {
-    const el = e.target;
-    if (!el.classList.contains('title')) {
-        return;
-    }
-    const parentLi = el.parentElement;
-    parentLi.classList.toggle('menu-open');
-});
-// navMenu.innerHTML = generateMenu(list);
-// navMenu.addEventListener('click', (e: MouseEvent) => {
-//     const el: HTMLElement = e.target as HTMLElement;
-//     if (!el.classList.contains('title')) {
-//         return;
+// function average(a: number, b: number, c: number): string {
+//     const avg: number = (a + b + c) / 3;
+//     return `Average is ${avg}`;
+// }
+// average(1, 2);
+// average('1', 2, true)
+// const num: number = average(1, 2, 3);
+// function average(a: number, b?: number, c?: number): string {
+//     if (b === undefined) {
+//         b = 0;
 //     }
-//     const parentLi: HTMLLIElement = el.parentElement as HTMLLIElement;
-//     parentLi.classList.toggle('menu-open');
-// });
+//     if (c === undefined) {
+//         c = 0;
+//     }
+//     const avg: number = (a + b + c) / 3;
+//     return `Average is ${avg}`;
+// }
+//
+// average(1 );
+// average(1, 2);
+// average('1', 2, true)
+// const num: number = average(1, 2, 3);
+// function average(a: number, b: number = 0, c: number = 0): string {
+//     const avg: number = (a + b + c) / 3;
+//     return `Average is ${avg}`;
+// }
+//
+// average(1 );
+// average(1, 2);
+// average('1', 2, true)
+// const num: number = average(1, 2, 3);
