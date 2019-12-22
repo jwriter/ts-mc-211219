@@ -1,52 +1,47 @@
-type Constructable = new (...args: any[]) => {};
-
-function Timestamped<BaseClass extends Constructable>(BC: BaseClass) {
-    return class extends BC {
-        public timestamp = new Date();
+function debounce(ms: number) {
+    let timeId: number | null;
+    return (target: object, key: string, descriptor: PropertyDescriptor): PropertyDescriptor => {
+        console.log(target);
+        console.log(key);
+        const originalFn = descriptor.value;
+        return {
+            ...descriptor,
+            value: (...args: any[]) => {
+                if (timeId) {
+                    clearTimeout(timeId);
+                }
+                timeId = setTimeout(() => {
+                    originalFn(...args);
+                }, ms);
+            },
+        };
     };
 }
 
-function Tagged<BaseClass extends Constructable>(BC: BaseClass) {
-    return class extends BC {
-        public tags = ['ts', 'js'];
+function logInputValue(_target: object, _key: string, descriptor: PropertyDescriptor): PropertyDescriptor {
+    const originalFn = descriptor.value;
+    return {
+        ...descriptor,
+        value: (event: Event) => {
+            const inputEl: HTMLInputElement = event.target as HTMLInputElement;
+            console.log(inputEl.value);
+            return originalFn(event);
+        },
     };
-}
+};
 
-class Point {
-    public constructor(public x: number, public y: number) {
+class Search {
+    public constructor(private element: HTMLInputElement) {
+        this.element.addEventListener('input', this.onSearch.bind(this));
+    }
+
+    @debounce(500)
+    @logInputValue
+    public onSearch(_event: Event) {
+
     }
 }
 
-class MixedPoint extends Timestamped(Tagged(Point)) {
-    public constructor(x: number, y: number) {
-        super(x, y);
-    }
-}
+const input = document.querySelector('.search') as HTMLInputElement;
 
-const inst = new MixedPoint(1, 2);
-console.log(inst.tags);
-console.log(inst.timestamp);
-
-
-abstract class AbstractInput<T> {
-
-    constructor(private  _value: T) {
-    }
-
-    public focus(): void {
-    }
-
-    public blur(): void {
-    }
-
-    public abstract getValue(): T;
-}
-
-class Input extends AbstractInput<string> {
-
-    private value!: string;
-
-    public getValue() {
-        return this.value;
-    }
-}
+const search = new Search(input);
