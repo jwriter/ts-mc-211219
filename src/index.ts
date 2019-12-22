@@ -32,16 +32,30 @@ function logInputValue(_target: object, _key: string, descriptor: PropertyDescri
 
 class Search {
     public constructor(private element: HTMLInputElement) {
-        this.element.addEventListener('input', this.onSearch.bind(this));
+        const h = debounce1(this.onSearch, 500);
+        this.element.addEventListener('input', h);
     }
 
-    @debounce(500)
-    @logInputValue
+    // @debounce(500)
+    // @logInputValue
     public onSearch(_event: Event) {
-
+        console.log(_event);
     }
 }
 
 const input = document.querySelector('.search') as HTMLInputElement;
 
 const search = new Search(input);
+
+
+function debounce1(fn: (e: Event) => void, ms: number) {
+    let timeId: number | null;
+    return (e: Event) => {
+        if (timeId) {
+            clearTimeout(timeId);
+        }
+        timeId = setTimeout(() => {
+            fn(e);
+        }, ms);
+    };
+};
