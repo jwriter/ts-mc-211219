@@ -1,22 +1,52 @@
-class BasePoint {
-    public constructor(
-        public x: number,
-        protected y: number,
-        private z: number,
-    ) {
+type Constructable = new (...args: any[]) => {};
 
-    }
+function Timestamped<BaseClass extends Constructable>(BC: BaseClass) {
+    return class extends BC {
+        public timestamp = new Date();
+    };
+}
 
-    public sum(): number {
-        return this.x + this.y + this.z;
+function Tagged<BaseClass extends Constructable>(BC: BaseClass) {
+    return class extends BC {
+        public tags = ['ts', 'js'];
+    };
+}
+
+class Point {
+    public constructor(public x: number, public y: number) {
     }
 }
 
-class Point extends BasePoint {
-    public constructor(x: number, y: number, z: number) {
-        super(x, y, z);
+class MixedPoint extends Timestamped(Tagged(Point)) {
+    public constructor(x: number, y: number) {
+        super(x, y);
     }
 }
 
-const p = new BasePoint(1, 2, 3);
-p.
+const inst = new MixedPoint(1, 2);
+console.log(inst.tags);
+console.log(inst.timestamp);
+
+
+abstract class AbstractInput<T> {
+
+    constructor(private  _value: T) {
+    }
+
+    public focus(): void {
+    }
+
+    public blur(): void {
+    }
+
+    public abstract getValue(): T;
+}
+
+class Input extends AbstractInput<string> {
+
+    private value!: string;
+
+    public getValue() {
+        return this.value;
+    }
+}
