@@ -1,61 +1,59 @@
-function debounce(ms: number) {
-    let timeId: number | null;
-    return (target: object, key: string, descriptor: PropertyDescriptor): PropertyDescriptor => {
-        console.log(target);
-        console.log(key);
-        const originalFn = descriptor.value;
-        return {
-            ...descriptor,
-            value: (...args: any[]) => {
-                if (timeId) {
-                    clearTimeout(timeId);
-                }
-                timeId = setTimeout(() => {
-                    originalFn(...args);
-                }, ms);
-            },
-        };
-    };
-}
+import 'reflect-metadata';
 
-function logInputValue(_target: object, _key: string, descriptor: PropertyDescriptor): PropertyDescriptor {
-    const originalFn = descriptor.value;
-    return {
-        ...descriptor,
-        value: (event: Event) => {
-            const inputEl: HTMLInputElement = event.target as HTMLInputElement;
-            console.log(inputEl.value);
-            return originalFn(event);
+function checkTypeInRunTime(target: object, key: string) {
+    const {name: typeName}: Function = Reflect.getMetadata('design:type', target, key);
+    let val: unknown;
+    Object.defineProperty(target, key, {
+        get(): any {
+            return val;
         },
-    };
-};
+        set(runTimeValue: any): void {
+            const realType = typeof runTimeValue;
+            if (realType !== typeName.toLowerCase()) {
+                throw  new Error(`type of ${key} is not ${typeName}. Actual is ${realType}`);
+            }
+            val = runTimeValue;
+        },
+    });
+}
 
-class Search {
-    public constructor(private element: HTMLInputElement) {
-        const h = debounce1(this.onSearch, 500);
-        this.element.addEventListener('input', h);
-    }
+// function logProp(target: object, key: string) {
+//     const fn = Reflect.getMetadata('design:type', target, key)
+//     console.log(fn.name);
+//     console.log(Reflect.getMetadata('design:paramtypes', target, key));
+//     console.log(Reflect.getMetadata('design:returntype', target, key));
+//     console.log(Reflect.getMetadata('design:typeinfo', target, key));
+// }
 
-    // @debounce(500)
-    // @logInputValue
-    public onSearch(_event: Event) {
-        console.log(_event);
+// function logMethod(target: object, key: string, _desc: PropertyDescriptor) {
+//     // const fn = Reflect.getMetadata('design:type', target, key)
+//     // console.log(fn.name);
+//     console.log(Reflect.getMetadata('design:paramtypes', target, key));
+//     console.log(Reflect.getMetadata('design:returntype', target, key));
+//     console.log(Reflect.getMetadata('design:typeinfo', target, key));
+// }
+
+class Person {
+    @checkTypeInRunTime
+    public name: string = 'Ihor';
+
+    public age: number = 0;
+
+    public patch(name: string, age: number): number {
+        this.name = name;
+        this.age = age;
+        return 1;
     }
 }
 
-const input = document.querySelector('.search') as HTMLInputElement;
+const p = new Person();
+console.log(p.name);
+p.name = 'Evgenia';
+console.log(p.name);
+try {
+    (p.name as any) = [];
+} catch (e) {
+    console.log(e);
+    console.log(p.name);
+}
 
-const search = new Search(input);
-
-
-function debounce1(fn: (e: Event) => void, ms: number) {
-    let timeId: number | null;
-    return (e: Event) => {
-        if (timeId) {
-            clearTimeout(timeId);
-        }
-        timeId = setTimeout(() => {
-            fn(e);
-        }, ms);
-    };
-};
