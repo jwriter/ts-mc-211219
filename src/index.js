@@ -1,32 +1,23 @@
 "use strict";
-// function average(a: number, b: number, c: number): string {
-//     const avg: number = (a + b + c) / 3;
-//     return `Average is ${avg}`;
-// }
-// average(1, 2);
-// average('1', 2, true)
-// const num: number = average(1, 2, 3);
-// function average(a: number, b?: number, c?: number): string {
-//     if (b === undefined) {
-//         b = 0;
-//     }
-//     if (c === undefined) {
-//         c = 0;
-//     }
-//     const avg: number = (a + b + c) / 3;
-//     return `Average is ${avg}`;
+// function getFullName(this: { name: string, surname: string }) {
+//     return `${this.name} ${this.surname}`;
 // }
 //
-// average(1 );
-// average(1, 2);
-// average('1', 2, true)
-// const num: number = average(1, 2, 3);
-// function average(a: number, b: number = 0, c: number = 0): string {
-//     const avg: number = (a + b + c) / 3;
-//     return `Average is ${avg}`;
+// let account = {
+//     name: 'Ihor',
+//     surname: 'Nepipenko',
+//     getFullName,
 // }
 //
-// average(1 );
-// average(1, 2);
-// average('1', 2, true)
-// const num: number = average(1, 2, 3);
+// account.getFullName();
+class UIElement {
+    addClickListener(_onclick) {
+    }
+}
+class Handler {
+    onClickBad(_event) {
+        this.info = 'e.message';
+    }
+}
+let h = new Handler();
+let uiElement = new UIElement();
