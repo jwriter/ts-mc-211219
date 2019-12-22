@@ -38,6 +38,9 @@ function isString(item: SN): item is string {
     return typeof item === 'string';
 }
 
+function average(a: string, b: number): string;
+function average(a: number, b: string, c: string): string;
+function average(a: string, b: string, c: number): string;
 function average(...args: SN[]): string {
     let total: number = 0;
     for (const item of args) {
@@ -51,8 +54,16 @@ function average(...args: SN[]): string {
     return `Average is ${avg}`;
 }
 
+
+average('2', 1);
+average(1, '2', '1');
+average('2', '1', 2);
+
 average(1);
 average(1, 2);
 average('1', 2, '2');
+average('1', '2', '2');
 average(1, 2, 3, 4, 5, 5, 55, '123');
 const num: number = average(1, 2, 3);
+
+$().on
