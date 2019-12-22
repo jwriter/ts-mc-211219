@@ -60,7 +60,7 @@
     ],
     /* List of folders to include type definitions from. */
     "types": [
-      "jquery",
+      "jasmine",
       "node"
     ],
     /* Type declaration files to be included in compilation. */
